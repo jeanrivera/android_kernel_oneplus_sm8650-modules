@@ -3,6 +3,7 @@
 KBUILD_OPTIONS += CAMERA_KERNEL_ROOT=$(KERNEL_SRC)/$(M)
 KBUILD_OPTIONS += KERNEL_ROOT=$(KERNEL_SRC)
 KBUILD_OPTIONS += MODNAME=camera
+KBUILD_OPTIONS += EXTRA_CFLAGS+=-I$(OUT_DIR)
 KBUILD_OPTIONS += BOARD_PLATFORM=$(TARGET_BOARD_PLATFORM)
 KBUILD_EXTRA_SYMBOLS := \
     $(OUT_DIR)/../sm8650-modules/qcom/opensource/mmrm-driver/Module.symvers \
@@ -20,9 +21,9 @@ CAMERA_COMPILE_BY = $(shell whoami | sed 's/\\/\\\\/')
 CAMERA_COMPILE_HOST = $(shell uname -n)
 
 cam_generated_h: $(shell find . -iname "*.c") $(shell find . -iname "*.h") $(shell find . -iname "*.mk")
-	echo '#define CAMERA_COMPILE_TIME "$(CAMERA_COMPILE_TIME)"' > cam_generated_h
-	echo '#define CAMERA_COMPILE_BY "$(CAMERA_COMPILE_BY)"' >> cam_generated_h
-	echo '#define CAMERA_COMPILE_HOST "$(CAMERA_COMPILE_HOST)"' >> cam_generated_h
+	echo '#define CAMERA_COMPILE_TIME "$(CAMERA_COMPILE_TIME)"' > $(OUT_DIR)/cam_generated_h
+	echo '#define CAMERA_COMPILE_BY "$(CAMERA_COMPILE_BY)"' >> $(OUT_DIR)/cam_generated_h
+	echo '#define CAMERA_COMPILE_HOST "$(CAMERA_COMPILE_HOST)"' >> $(OUT_DIR)/cam_generated_h
 
 modules: cam_generated_h
 

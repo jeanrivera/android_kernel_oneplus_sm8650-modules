@@ -1,0 +1,1 @@
+subdir-ccflags-y += -Wno-error=uninitialized -Wno-error=sometimes-uninitialized
